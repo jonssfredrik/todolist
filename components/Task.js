@@ -1,4 +1,3 @@
-// import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Text, View } from 'react-native';
 import CheckIcon from '../icons/CheckIcon';
@@ -9,36 +8,25 @@ const StyledText = styled(Text)
 
 export default function Task( props ) {
 
-    if(props.done) {
-        return (
-            <StyledView key={"done_"+props.index + props.text} className={`flex border-[#EEEFF2] ${props.lastChild ? '' : 'border-b'}`}>
-                <StyledView className="flex flex-row gap-2 items-center">
+    const uniqKey           = props.id;
+    const lastChildClass    = props.lastChild ? 'border-0' : '';
 
-                    <StyledView className="border rounded-full border-[#9CA3AF] bg-[#9CA3AF] h-[18px] w-[18px] flex justify-center items-center">
-                        <CheckIcon />
-                    </StyledView>
-
-                    <StyledView className="grow py-3">
-                        <StyledText className="color-[#9CA3AF] line-through text-base">
-                            {props.text}
-                        </StyledText>
-                    </StyledView>
-
-                </StyledView>
-            </StyledView>
-        );
-    }
-
+    const rowClasses        = 'flex border-b border-[#EEEFF2] ' + lastChildClass;
+    const circleClasses     = props.done ? 'border-[#9CA3AF] bg-[#9CA3AF] border' : 'border-[#877ABA] border-2';
+    const checkIcon         = props.done ? <CheckIcon /> : '';
+    const rowPadding        = props.done ? 'py-3' : 'py-5';
+    const textDecoration    = props.done ? 'color-[#9CA3AF] line-through text-base' : 'text-base';
+    
     return (
-        <StyledView key={"undone_"+props.index + props.text} className={`flex border-[#EEEFF2] ${props.lastChild ? '' : 'border-b'}`}>
+        <StyledView key={"1"+uniqKey} className={rowClasses}>
             <StyledView className="flex flex-row gap-2 items-center">
 
-                <StyledView className="border-2 rounded-full border-[#877ABA] h-[18px] w-[18px] flex justify-center items-center">
-
+                <StyledView className={`rounded-full h-[18px] w-[18px] flex justify-center items-center ${circleClasses}`}>
+                    {checkIcon}
                 </StyledView>
 
-                <StyledView className="grow py-5">
-                    <StyledText className="text-base">
+                <StyledView className={`grow ${rowPadding}`}>
+                    <StyledText className={textDecoration}>
                         {props.text}
                     </StyledText>
                 </StyledView>
@@ -46,5 +34,4 @@ export default function Task( props ) {
             </StyledView>
         </StyledView>
     );
-
 }
