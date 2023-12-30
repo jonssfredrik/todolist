@@ -4,27 +4,135 @@
     "name": "Inköpslista",
     "theme": 1,
     "itemsLeft": 6,
-    "fav": true
+    "items": [
+      {
+        "id": 1,
+        "text": "Smör",
+        "completed": true
+      },
+      {
+        "id": 2,
+        "text": "Dricka",
+        "completed": true
+      },
+      {
+        "id": 3,
+        "text": "Chips",
+        "completed": true
+      },
+      {
+        "id": 4,
+        "text": "Bröd",
+        "completed": true
+      },
+      {
+        "id": 5,
+        "text": "Kaviar",
+        "completed": true
+      },
+      {
+        "id": 6,
+        "text": "Ost",
+        "completed": true
+      },
+      {
+        "id": 7,
+        "text": "Skinka",
+        "completed": true
+      },
+      {
+        "id": 8,
+        "text": "Gurka",
+        "completed": false
+      },
+      {
+        "id": 9,
+        "text": "Sallad",
+        "completed": false
+      },
+      {
+        "id": 10,
+        "text": "Rödlök",
+        "completed": false
+      },
+      {
+        "id": 11,
+        "text": "Fetaost",
+        "completed": false
+      },
+      {
+        "id": 13,
+        "text": "Pepsi",
+        "completed": false
+      },
+      {
+        "id": 14,
+        "text": "Billys-pizza",
+        "completed": false
+      },
+      {
+        "id": 15,
+        "text": "Tomater",
+        "completed": true
+      }
+    ],
+    "favorite": true
   },
   {
     "id": 2,
     "name": "Inför resan",
     "theme": 2,
     "itemsLeft": 4,
-    "fav": true
+    "items": [
+      {
+        "id": 1,
+        "text": "Packa kläder",
+        "completed": false
+      },
+      {
+        "id": 2,
+        "text": "Fixa hundvakt",
+        "completed": true
+      }
+    ],
+    "favorite": true
   },
   {
     "id": 3,
     "name": "Fixa på bilen",
     "theme": 3,
     "itemsLeft": 3,
-    "fav": false
+    "items": [
+      {
+        "id": 1,
+        "text": "Nya vindrutetorkare",
+        "completed": false
+      },
+      {
+        "id": 2,
+        "text": "Fyll på spolarvätska",
+        "completed": false
+      }
+    ],
+    "favorite": false
   },
   {
     "id": 4,
     "name": "Att göra",
     "theme": 4,
     "itemsLeft": 12,
-    "fav": false
+    "items": [
+      {
+        "id": 1,
+        "text": "Måla om kontoret",
+        "completed": false
+      },
+      {
+        "id": 2,
+        "text": "Laga hålet i väggen",
+        "completed": false
+      }
+    ],
+    "favorite": false
   }
 ]

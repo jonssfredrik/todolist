@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
 import { Text, View, SafeAreaView, ScrollView, Dimensions } from "react-native";
 import { styled } from "nativewind";
 
@@ -7,24 +7,26 @@ import TopBar from "./components/TopBar";
 import Groups from "./components/Groups";
 import Lists from "./components/Lists";
 
-import todoItems from "./items.json";
+import dummyLists from "./lists.json";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
 export default function App() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [screenDimensions, setScreenDimensions] = useState(
-    Dimensions.get("screen")
-  );
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [screenDimensions, setScreenDimensions] = React.useState(Dimensions.get("screen"));
+  const [lists, _setList] = React.useState(dummyLists);
+  const [activeListId, setActiveListId] = React.useState(1);
+  const contentHeightDiffers = isOpen ? 590 : 209;
+  const contentHeight = Math.ceil(screenDimensions.height - contentHeightDiffers);
 
   const handleIsOpen = (val) => setIsOpen(val);
-  const contentHeightDiffers = isOpen ? 590 : 209;
-  const contentHeight = Math.ceil(
-    screenDimensions.height - contentHeightDiffers
-  );
+  const changeActiveList = (id) => {
+    console.log("changeActibveList");
+    setActiveListId(id);
+  };
 
-  useEffect(() => {
+  React.useEffect(() => {
     const updateScreenDimensions = () => {
       setScreenDimensions(Dimensions.get("screen"));
     };
@@ -32,32 +34,34 @@ export default function App() {
     Dimensions.addEventListener("change", updateScreenDimensions);
   }, []);
 
-  const activeItems = todoItems.filter((item) => !item.completed);
-  const completedItems = todoItems.filter((item) => item.completed);
+  const activeItems = lists.find((list) => list.id == activeListId).items?.filter((item) => !item.completed);
+  const completedItems = lists.find((list) => list.id == activeListId).items?.filter((item) => item.completed);
 
   return (
-    <StyledView className="flex-1 bg-[#fff]">
+    <StyledView className="flex-1 bg-white">
       <TopBar />
 
-      <StyledView className={`pb-[100px]`} style={{ height: contentHeight }}>
-        <Groups />
+      <StyledView className="pb-[100px]" style={{ height: contentHeight }}>
+        <Groups lists={lists} activeListId={activeListId} changeActiveList={changeActiveList} />
 
-        <StyledView className="mt-3 px-5">
+        <StyledView className="mt-3 mb-8 px-5">
           <SafeAreaView>
             <ScrollView showsVerticalScrollIndicator={false}>
               <StyledView>
                 <Lists items={activeItems} />
               </StyledView>
 
-              <StyledView className="mt-5 mb-4">
-                <StyledText className="color-[#111827] font-bold">
-                  Avklarade
-                </StyledText>
-              </StyledView>
+              {completedItems.length > 0 ? (
+                <React.Fragment>
+                  <StyledView className="mt-5 mb-4">
+                    <StyledText className="color-[#111827] font-bold">Avklarade</StyledText>
+                  </StyledView>
 
-              <StyledView className="mb-5">
-                <Lists items={completedItems} />
-              </StyledView>
+                  <StyledView className="mb-5">
+                    <Lists items={completedItems} />
+                  </StyledView>
+                </React.Fragment>
+              ) : null}
             </ScrollView>
           </SafeAreaView>
         </StyledView>

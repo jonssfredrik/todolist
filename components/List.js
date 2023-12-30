@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View } from "react-native";
+import * as React from "react";
+import { Text, View, TouchableOpacity } from "react-native";
 import { styled } from "nativewind";
 import StarIcon from "../icons/StarIcon";
 
@@ -16,37 +16,36 @@ const variantStyles = {
   4: "bg-[#D68E66]",
 };
 
-export default function Task({ list, lastChild, active }) {
+export default function Task({ list, isLastChild, isActive, changeActiveList }) {
   return (
-    <StyledView
+    <TouchableOpacity
+      onPress={() => changeActiveList(list.id)}
       className={[
         defaultStyles,
         variantStyles[list.theme],
-        lastChild ? "mr-0" : "mr-2",
-        active ? "opacity-100 " : "opacity-70",
+        isLastChild ? "mr-0" : "mr-2",
+        isActive ? "opacity-100 " : "opacity-70",
       ].join(" ")}
     >
-      {list.fav ? (
-        <StyledView className="absolute right-[5px] top-[5px]">
-          <StarIcon />
-        </StyledView>
-      ) : null}
+      <React.Fragment>
+        {list.favorite ? (
+          <StyledView className="absolute right-[5px] top-[5px]">
+            <StarIcon />
+          </StyledView>
+        ) : null}
 
-      <StyledText
-        className={`${
-          active ? "color-[#fff] " : "color-[#444]"
-        } text-lg mb-0 leading-5 opacity-100`}
-      >
-        {list.name}
-      </StyledText>
+        <StyledText className={`${isActive ? "color-[#fff] " : "color-[#444]"} text-lg mb-0 leading-5 opacity-100`}>
+          {list.name}
+        </StyledText>
 
-      <StyledText
-        className={`${
-          active ? "color-[#fff] " : "color-[#444]"
-        } text-base opacity-[0.8]`}
-      >
-        {list.itemsLeft} todos kvar
-      </StyledText>
-    </StyledView>
+        <StyledText className={`${isActive ? "color-[#fff] " : "color-[#444]"} text-base opacity-[0.8]`}>
+          {nonCompletedItemsLeft(list.items)} todos kvar
+        </StyledText>
+      </React.Fragment>
+    </TouchableOpacity>
   );
+}
+
+function nonCompletedItemsLeft(items) {
+  return items.filter((item) => !item.completed).length;
 }
