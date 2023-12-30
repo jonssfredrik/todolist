@@ -1,24 +1,28 @@
-import React from "react";
-import { View } from "react-native";
+import * as React from "react";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { styled } from "nativewind";
-
-import Task from "./Task";
+import List from "./List";
 
 const StyledView = styled(View);
 
-export default function Lists({ items }) {
+export default function Lists({ lists, activeListId, changeActiveList }) {
   return (
-    <StyledView className="flex px-3.5 border-solid border-2 border-[#EEEFF2] rounded-xl">
-      <StyledView className="flex">
-        {items.map((item, index) => (
-          <StyledView className="flex" key={item.id}>
-            <Task
-              item={item}
-              lastItem={index === items.length - 1 ? true : false}
-            />
+    <StyledView>
+      <SafeAreaView>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} className="pb-2 ml-5 mr-5">
+          <StyledView className="color-[#6B7280] flex flex-row justify-start items-start mt-1">
+            {lists.map((list, i) => (
+              <List
+                key={list.id}
+                list={list}
+                isLastChild={i === lists.length - 1 ? true : false}
+                isActive={activeListId === list.id}
+                changeActiveList={changeActiveList}
+              />
+            ))}
           </StyledView>
-        ))}
-      </StyledView>
+        </ScrollView>
+      </SafeAreaView>
     </StyledView>
   );
 }

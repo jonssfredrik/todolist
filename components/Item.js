@@ -6,7 +6,7 @@ import { styled } from "nativewind";
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-export default function Task({ item, lastItem }) {
+export default function Item({ item, lastItem }) {
   const circleClasses = item.completed
     ? "border-[#9CA3AF] bg-[#9CA3AF] border"
     : "border-[#877ABA] border-2";

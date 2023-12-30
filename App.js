@@ -4,8 +4,8 @@ import { styled } from "nativewind";
 
 import Bottomsheet from "./components/Bottomsheet";
 import TopBar from "./components/TopBar";
-import Groups from "./components/Groups";
 import Lists from "./components/Lists";
+import ItemsLists from "./components/ItemsLists";
 
 import dummyLists from "./lists.json";
 
@@ -30,13 +30,13 @@ export default function App() {
       <TopBar />
 
       <StyledView className="pb-[100px]" style={{ height: contentHeight }}>
-        <Groups lists={lists} activeListId={activeListId} changeActiveList={changeActiveList} />
+        <Lists lists={lists} activeListId={activeListId} changeActiveList={changeActiveList} />
 
         <StyledView className="mt-3 mb-8 px-5">
           <SafeAreaView>
             <ScrollView showsVerticalScrollIndicator={false}>
               <StyledView>
-                <Lists items={activeItems} />
+                <ItemsLists items={activeItems} />
               </StyledView>
 
               {completedItems.length > 0 ? (
@@ -46,7 +46,7 @@ export default function App() {
                   </StyledView>
 
                   <StyledView className="mb-5">
-                    <Lists items={completedItems} />
+                    <ItemsLists items={completedItems} />
                   </StyledView>
                 </React.Fragment>
               ) : null}
