@@ -14,25 +14,13 @@ const StyledText = styled(Text);
 
 export default function App() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [screenDimensions, setScreenDimensions] = React.useState(Dimensions.get("screen"));
   const [lists, _setList] = React.useState(dummyLists);
   const [activeListId, setActiveListId] = React.useState(1);
   const contentHeightDiffers = isOpen ? 590 : 209;
-  const contentHeight = Math.ceil(screenDimensions.height - contentHeightDiffers);
+  const contentHeight = Math.ceil(Dimensions.get("screen").height - contentHeightDiffers);
 
   const handleIsOpen = (val) => setIsOpen(val);
-  const changeActiveList = (id) => {
-    console.log("changeActibveList");
-    setActiveListId(id);
-  };
-
-  React.useEffect(() => {
-    const updateScreenDimensions = () => {
-      setScreenDimensions(Dimensions.get("screen"));
-    };
-
-    Dimensions.addEventListener("change", updateScreenDimensions);
-  }, []);
+  const changeActiveList = (id) => setActiveListId(id);
 
   const activeItems = lists.find((list) => list.id == activeListId).items?.filter((item) => !item.completed);
   const completedItems = lists.find((list) => list.id == activeListId).items?.filter((item) => item.completed);
