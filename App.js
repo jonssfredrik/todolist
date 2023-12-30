@@ -17,20 +17,31 @@ export default function App() {
   const [lists, _setList] = React.useState(dummyLists);
   const [activeListId, setActiveListId] = React.useState(1);
   const contentHeightDiffers = isOpen ? 590 : 209;
-  const contentHeight = Math.ceil(Dimensions.get("screen").height - contentHeightDiffers);
+  const contentHeight = Math.ceil(
+    Dimensions.get("screen").height - contentHeightDiffers
+  );
 
   const handleIsOpen = (val) => setIsOpen(val);
   const changeActiveList = (id) => setActiveListId(id);
 
-  const activeItems = lists.find((list) => list.id == activeListId).items?.filter((item) => !item.completed);
-  const completedItems = lists.find((list) => list.id == activeListId).items?.filter((item) => item.completed);
+  const activeItems = lists
+    .find((list) => list.id == activeListId)
+    .items?.filter((item) => !item.completed);
+  const completedItems = lists
+    .find((list) => list.id == activeListId)
+    .items?.filter((item) => item.completed);
 
   return (
     <StyledView className="flex-1 bg-white">
+      <Backdrop isOpen={isOpen} />
       <TopBar />
 
       <StyledView className="pb-[100px]" style={{ height: contentHeight }}>
-        <Lists lists={lists} activeListId={activeListId} changeActiveList={changeActiveList} />
+        <Lists
+          lists={lists}
+          activeListId={activeListId}
+          changeActiveList={changeActiveList}
+        />
 
         <StyledView className="mt-3 mb-8 px-5">
           <SafeAreaView>
@@ -42,7 +53,9 @@ export default function App() {
               {completedItems.length > 0 ? (
                 <React.Fragment>
                   <StyledView className="mt-5 mb-4">
-                    <StyledText className="color-[#111827] font-bold">Avklarade</StyledText>
+                    <StyledText className="color-[#111827] font-bold">
+                      Avklarade
+                    </StyledText>
                   </StyledView>
 
                   <StyledView className="mb-5">
@@ -55,7 +68,15 @@ export default function App() {
         </StyledView>
       </StyledView>
 
-      <Bottomsheet handleisopen={handleIsOpen} isOpen={isOpen} />
+      <Bottomsheet handleIsOpen={handleIsOpen} isOpen={isOpen} />
     </StyledView>
+  );
+}
+
+function Backdrop({ isOpen }) {
+  if (!isOpen) return null;
+
+  return (
+    <StyledView className="h-full w-full absolute inset-0 bg-black/70 z-40" />
   );
 }

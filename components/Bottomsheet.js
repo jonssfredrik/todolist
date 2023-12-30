@@ -1,20 +1,17 @@
-import React, { useState, useRef } from "react";
-import { Text, View, TextInput, onChangeText } from "react-native";
+import * as React from "react";
+import { Text, View, TextInput } from "react-native";
 import { styled } from "nativewind";
 
-import Reaccuring from "./Reaccuring";
+import ItemSuggestion from "./ItemSuggestion";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
-export default function Bottomsheed({ handleisopen, isOpen }) {
-  const [inputText, setInputText] = useState("");
+const SUGGESTED_ITEMS = ["Dricka", "Snus", "Vegoburgare", "Creme fraiche"];
 
-  const updateIsOpen = (val) => {
-    handleisopen(val);
-  };
-
-  const textInputRef = useRef(null);
+export default function Bottomsheet({ handleIsOpen, isOpen }) {
+  const [inputText, setInputText] = React.useState("");
+  const textInputRef = React.useRef(null);
 
   const removeFocus = () => {
     textInputRef.current.blur();
@@ -25,11 +22,11 @@ export default function Bottomsheed({ handleisopen, isOpen }) {
   };
 
   const onFocus = () => {
-    updateIsOpen(true);
+    handleIsOpen(true);
   };
 
   const onBlur = () => {
-    updateIsOpen(false);
+    handleIsOpen(false);
     clearInput();
   };
 
@@ -39,43 +36,22 @@ export default function Bottomsheed({ handleisopen, isOpen }) {
   };
 
   const closeBottomsheet = () => {
-    updateIsOpen(false);
+    handleIsOpen(false);
     removeFocus();
   };
 
-  const handleReaccuringOnPress = (text) => {
-    setInputText(text);
+  const addSuggestedItem = (item) => {
+    setInputText(item);
     submitInput();
   };
 
-  const reaccuringItems = [
-    {
-      id: 1,
-      name: "Drickaaa",
-    },
-    {
-      id: 2,
-      name: "Snus",
-    },
-    {
-      id: 3,
-      name: "Vegoburgare",
-    },
-    {
-      id: 4,
-      name: "Creme fraiche",
-    },
-  ];
-
   return (
     <StyledView
-      className={`absolute bottom-0 left-0 right-0 h-[${
-        isOpen ? "203px" : "86px"
-      }] ${
-        isOpen ? "pt-6" : "0px"
-      } flex justify-center bg-[#fff] border border-[#EEEFF2] border-b-0 rounded-tl-[24px] rounded-tr-[24px] shadow-2xl`}
+      className={`z-50 absolute bottom-0 left-0 right-0 h-[${
+        isOpen ? "203px pt-6" : "86px 0px"
+      }] flex justify-center bg-white border border-[#EEEFF2] border-b-0 rounded-t-3xl shadow-2xl`}
     >
-      <StyledView className="absolute top-[8px] left-[50%] h-[6px] w-[32px] bg-[#EEEFF2] rounded ml"></StyledView>
+      <StyledView className="absolute top-2 left-1/2 h-[6px] w-8 bg-[#EEEFF2] rounded"></StyledView>
 
       {isOpen && (
         <StyledView className={"overflow-hidden px-5 z-20 h-[118px]"}>
@@ -92,9 +68,12 @@ export default function Bottomsheed({ handleisopen, isOpen }) {
           </StyledView>
 
           <StyledView className="flex flex-row h-[39px] mt-7">
-            {reaccuringItems.map((item, index) => (
+            {SUGGESTED_ITEMS.map((item, index) => (
               <StyledView className="flex" key={index}>
-                <Reaccuring text={item.name} />
+                <ItemSuggestion
+                  item={item}
+                  addSuggestedItem={addSuggestedItem}
+                />
               </StyledView>
             ))}
           </StyledView>
